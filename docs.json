@@ -27,7 +27,8 @@
           {
             "group": "Get Started",
             "pages": [
-              "quickstart"
+              "quickstart",
+              "gamerules"
             ]
           }
         ]
