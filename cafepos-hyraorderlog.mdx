@@ -1,0 +1,128 @@
+---
+title: "easyPOS CafePOS - Hyra Order Logging Addon"
+description: "Using this addon allows you to add the order logging from Hyra into your CafePOS instance."
+---
+
+## Prequsities
+
+- You must have an active Hyra Instance.
+- You must be able to create an API key.
+- You must own easyPOS's CafePOS.
+
+## Steps
+
+1. Create an Exporter; you can use [Hyra's Docs](https://docs.hyra.io/api-reference/players/module/creating-an-exporter) to help you. Return back to this page afterwards.
+2. Create a new <Icon icon="newspaper" iconType="regular" /> **Script** in <Icon icon="cloud-arrow-up" /> **ServerScriptService**. Name it anything.
+3. Go inside the script and add the code below:
+
+   ```lua
+   local apikey = "YOUR_API_KEY" -- Replace with your actual API KEY
+   local workspaceid = "YOUR_WORKSPACE_ID" -- Replace with your workspace id.
+   local exporterlocation = game.ServerScriptService:WaitForChild("OrderLogModule") -- Replace this with your exporter's location.
+   local orderLog = require(exporterlocation)
+   orderLog.setupAPI(apikey, workspaceid)
+   ```
+4. Make sure you have changed everything where it says to change it.
+5. Create a <Icon icon="clipboard-list" />**ModuleScript** in your Addons folder in your CafePOS instance. You can name it Order Logging or anything else you want it to be.
+6. Paste the code below into it. You are reccommended not to modify it.
+
+```lua
+local Module = require(121652996197382)
+local API = Module.API
+
+
+local AddonId = 5378 -- This is required for interacting with the API
+local Menu = nil
+local OrderModule = require(game.ServerScriptService:WaitForChild("OrderLogModule"))
+local orders = {
+	
+}
+
+local Menu = API:Invoke("GetMenu", { ID=AddonId })
+
+local function GetItem(ID)
+	for _, Category in pairs(Menu) do
+		if Category and Category.Items then -- Check if Category and its Items exist
+			for _, Item in pairs(Category.Items) do
+				if Item and Item.ID == ID then -- Check if Item and its ID exist
+					return Item
+				end
+			end
+		end
+	end
+	return nil
+end
+
+return {
+	
+	Name = "Order Logging",
+	
+	-- Triggers when the order handler is ready.
+	Initialise = function(ID)
+		AddonId = ID
+		Menu = API:Invoke("GetMenu", { ID=AddonId })
+	end,
+	
+	-- Triggers when a new order is placed.
+	OrderCreated = function(Order)
+		local items = {}
+		local itemsToProcess = Order.Items
+		for _, itemData in pairs(itemsToProcess) do
+			local itemId = itemData.ID
+
+			local fullItemDetails = GetItem(itemId) -- Use the fixed GetItem function
+
+			if fullItemDetails then
+				table.insert(items, fullItemDetails.Name)
+			else
+				warn("Item with ID:", itemId, "not found in the menu.")
+			end
+		end
+		game.ReplicatedStorage.test:Fire(Order)
+		local order = OrderModule.createOrder(Order.Player, Order.Player, {
+			items = items,
+			status = "waiting_for_preparation",
+		})
+		local player = Order.Player
+		orders[player] = order.id
+		items = {}
+		
+	end,
+	
+	-- Triggers when an order is removed by an admin (NOT COMPLETED).
+	OrderRemoved = function(Order)
+		OrderModule.setCancelled(orders[Order.Player])
+		orders[Order.Player] = nil
+	end,
+
+	-- Triggers when an order is claimed.
+	OrderClaimed = function(Order, Player) 
+		OrderModule.setPreparing(orders[Order.Player], Player) -- Or spoof a player object (see docs - Creating an Order, Using User Object)
+	end,
+
+	-- Triggers when an order is unclaimed by an admin.
+	OrderUnclaimed = function(Order, Player)
+		OrderModule.setReprepare(orders[Order.Player])
+	end,
+	
+	-- Triggers when an order is completed.
+	OrderCompleted = function(Order, Player)
+		OrderModule.setComplete(orders[Order.Player])
+		orders[Order.Player] = nil
+	end,
+	
+	-- Triggers whenever an order is created or updated. All orders are returned.
+	OrdersUpdated = function(Orders)
+		
+	end,
+}
+```
+
+7. Ensure that is all saved. HTTP requests MUST be on.
+
+   Enjoy your Order Logging system\! If you need any help, my DMs are always open. If they are not, email me at [slugmoon@slugmoon.com](mailto:slugmoon@slugmoon.com)
+
+## Limitations
+
+- You cant see who placed the order, due to lacking CafePOS apis.
+- If they ordered more than one of the same items, it may only show as one. Might work.

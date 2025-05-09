@@ -19,6 +19,12 @@
               "index",
               "slugmoonabout"
             ]
+          },
+          {
+            "group": "Creations",
+            "pages": [
+              "cafepos-hyraorderlog"
+            ]
           }
         ]
       },
