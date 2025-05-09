@@ -11,12 +11,13 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Introduction",
+        "tab": "Slugmoon Docs",
         "groups": [
           {
             "group": "Get Started",
             "pages": [
-              "index"
+              "index",
+              "slugmoonabout"
             ]
           }
         ]
