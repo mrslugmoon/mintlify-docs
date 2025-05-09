@@ -20,6 +20,17 @@
             ]
           }
         ]
+      },
+       {
+        "tab": "Freshlux Docs",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "quickstart"
+            ]
+          }
+        ]
       }
     ],
     "global": {
