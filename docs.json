@@ -25,7 +25,7 @@
         "tab": "Freshlux Docs",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Quickstart",
             "pages": [
               "quickstart",
               "gamerules"
