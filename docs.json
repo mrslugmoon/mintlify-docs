@@ -43,6 +43,12 @@
               "quickstart",
               "gamerules"
             ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "shiftguides"
+            ]
           }
         ]
       }
