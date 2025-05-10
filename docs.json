@@ -25,6 +25,12 @@
             "pages": [
               "cafepos-hyraorderlog"
             ]
+          },
+          {
+            "group": "Other",
+            "pages": [
+              "slugmoondomains"
+            ]
           }
         ]
       },
