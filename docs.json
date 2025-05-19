@@ -65,9 +65,10 @@
         "tab": "API",
         "groups": [
           {
-            "group": "API",
+            "group": "Slugmoon shortLinks API",
             "pages": [
-              "/api-reference/endpoint/create"
+              "/api-reference/endpoint/create",
+              "/api-reference/endpoint/deleteshorturl"
             ]
           }
         ]
