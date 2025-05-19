@@ -1,5 +1,26 @@
 ---
-title: 'Shorten URL'
+title: "Shorten URL"
 authMethod: "none"
 api: "POST https://srbx.co.uk/api/users/urls"
+description: "Shorten a URL using Slugmoon's Link Shortner."
 ---
+
+<ParamField header="authorization" type="string" required="true">
+  Your token from the API.
+</ParamField>
+
+<ParamField body="destination" type="string" required="true">
+  Where you want the URL to go to.
+</ParamField>
+
+<ParamField body="destination" type="string" required="true">
+  Where you want the URL to go to.
+</ParamField>
+
+<ParamField body="vanity" type="string">
+  Custom URL link.
+</ParamField>
+
+<ParamField body="enabled" default="true" type="boolean" required>
+  Determins whether it is enabled or not.
+</ParamField>
