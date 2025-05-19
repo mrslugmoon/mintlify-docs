@@ -1,5 +1,14 @@
 {
   "$schema": "https://mintlify.com/docs.json",
+   "api": {
+  "mdx": {
+    "server": "https://srbx.co.uk/api", 
+    "auth": {
+      
+      
+    }
+  }
+},
   "theme": "mint",
   "name": "Slugmoon Docs",
   "colors": {
@@ -48,6 +57,17 @@
             "group": "Guides",
             "pages": [
               "shiftguides"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API",
+        "groups": [
+          {
+            "group": "API",
+            "pages": [
+              "/api-reference/endpoint/create"
             ]
           }
         ]
