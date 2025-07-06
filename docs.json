@@ -40,6 +40,12 @@
             "pages": [
               "slugmoondomains"
             ]
+          },
+          {
+            "group": "Slugmoon Suite",
+            "pages": [
+              "slugwarp"
+            ]
           }
         ]
       },
